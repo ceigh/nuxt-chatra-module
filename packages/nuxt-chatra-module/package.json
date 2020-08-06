@@ -1,7 +1,7 @@
 {
   "name": "nuxt-chatra-module",
   "description": "Nuxt Chatra integration",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Artjom Löbsack <ceigh@pm.me> (https://ceigh.com)",
   "main": "module.js",
   "keywords": [
@@ -11,5 +11,12 @@
   "license": "MIT",
   "homepage": "https://github.com/ceigh/nuxt-chatra-module",
   "repository": "https://github.com/ceigh/nuxt-chatra-module",
-  "bugs": "https://github.com/ceigh/nuxt-chatra-module/issues"
+  "bugs": "https://github.com/ceigh/nuxt-chatra-module/issues",
+  "scripts": {
+    "prepack": "cp ../../README.md README.md",
+    "postpack": "rimraf README.md"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  }
 }
