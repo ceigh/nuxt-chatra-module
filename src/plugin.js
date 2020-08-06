@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
-window.ChatraID = '<%= options.id %>'
+const options = '<%= options %>'
+window.ChatraID = options.id
 
 const script = document.createElement('script')
 script.async = true
