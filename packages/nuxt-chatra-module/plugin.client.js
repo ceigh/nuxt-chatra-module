@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-const options = '<%= options %>'
+const options = JSON.parse('<%= JSON.stringify(options) %>')
 window.ChatraID = options.id
 
 const script = document.createElement('script')

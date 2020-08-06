@@ -1,10 +1,12 @@
 {
-  "name": "nuxt-chatra-module",
+  "name": "nuxt-chatra-module-monorepo",
   "private": true,
-  "main": "src/module.js",
-  "files": [
-    "src"
+  "workspaces": [
+    "packages/*"
   ],
+  "scripts": {
+    "dev": "yarn workspace nuxt-mock dev"
+  },
   "devDependencies": {
     "@commitlint/cli": "^9.1.1",
     "@commitlint/config-conventional": "^9.1.1",
