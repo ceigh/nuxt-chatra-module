@@ -2,5 +2,14 @@
   "name": "nuxt-chatra-module",
   "description": "Nuxt Chatra integration",
   "version": "0.1.0",
-  "main": "module.js"
+  "author": "Artjom Löbsack <ceigh@pm.me> (https://ceigh.com)",
+  "main": "module.js",
+  "keywords": [
+    "nuxt",
+    "chatra"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/ceigh/nuxt-chatra-module",
+  "repository": "https://github.com/ceigh/nuxt-chatra-module",
+  "bugs": "https://github.com/ceigh/nuxt-chatra-module/issues"
 }
