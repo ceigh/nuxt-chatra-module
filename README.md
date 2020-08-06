@@ -1,4 +1,6 @@
 # 💬 nuxt-chatra-module
+![npm](https://img.shields.io/npm/v/nuxt-chatra-module)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/nuxt-chatra-module)
 
 > Simple [Nuxt.js](https://nuxtjs.org) [Chatra](https://chatra.com) integration.
 
@@ -6,7 +8,9 @@
 
 `yarn add nuxt-chatra-module # npm i nuxt-chatra-module`
 Add `chatra` section with options to your `nuxt.config.js`,
+
 check all options below, only `id` option is required.
+
 Also you must add `nuxt-chatra-module` to `modules` section:
 
 ```js
@@ -72,6 +76,7 @@ go to methods api [reference](https://chatra.com/help/api/#methods).
 
 This package use [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces).
 It's just to separate nuxt testing dev space and our module.
+
 You can make changes by:
 
 ```shell
@@ -84,6 +89,6 @@ CHATRA_ID=abcdefghijklmnopq yarn dev
 git commit .
 ```
 
-# LICENSE
+# License
 
 MIT.
