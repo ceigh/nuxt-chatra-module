@@ -1,5 +1,10 @@
+import path from 'path'
+
 export default function () {
-  console.log(this.options.chatra.id) // 12345
+  this.addPlugin({
+    src: path.resolve(__dirname, 'plugin.js'),
+    options: { id: this.options.chatra.id }
+  })
 }
 
 module.exports.meta = require('../package.json')
