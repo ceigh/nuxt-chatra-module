@@ -13,8 +13,8 @@
   "repository": "https://github.com/ceigh/nuxt-chatra-module",
   "bugs": "https://github.com/ceigh/nuxt-chatra-module/issues",
   "scripts": {
-    "prepack": "cp ../../README.md README.md",
-    "postpack": "rimraf README.md"
+    "prepack": "cp ../../README.md README.md && cp ../../LICENSE LICENSE",
+    "postpack": "rimraf README.md && rimraf LICENSE"
   },
   "devDependencies": {
     "rimraf": "^3.0.2"
