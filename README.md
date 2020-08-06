@@ -1,12 +1,11 @@
-# 💬 nuxt-chatra-module
-![npm](https://img.shields.io/npm/v/nuxt-chatra-module)
-![npm bundle size](https://img.shields.io/bundlephobia/minzip/nuxt-chatra-module)
+# 💬 nuxt-chatra-module ![npm](https://img.shields.io/npm/v/nuxt-chatra-module) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/nuxt-chatra-module)
 
 > Simple [Nuxt.js](https://nuxtjs.org) [Chatra](https://chatra.com) integration.
 
 # Installation
 
 `yarn add nuxt-chatra-module # npm i nuxt-chatra-module`
+
 Add `chatra` section with options to your `nuxt.config.js`,
 
 check all options below, only `id` option is required.
