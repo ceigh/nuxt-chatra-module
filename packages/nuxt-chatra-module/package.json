@@ -1,7 +1,7 @@
 {
   "name": "nuxt-chatra-module",
   "description": "Nuxt Chatra integration",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Artjom Löbsack <ceigh@pm.me> (https://ceigh.com)",
   "main": "module.js",
   "keywords": [
