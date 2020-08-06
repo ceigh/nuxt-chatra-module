@@ -1,5 +1,6 @@
 {
   "name": "nuxt-chatra-module",
-  "version": "0.0.1",
+  "description": "Nuxt Chatra integration",
+  "version": "0.1.0",
   "main": "module.js"
 }
