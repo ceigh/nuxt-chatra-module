@@ -5961,9 +5961,7 @@ num2fraction@^1.2.2:
   integrity sha1-b2gragJ6Tp3fpFZM0lidHU5mnt4=
 
 nuxt-chatra-module@^0.0.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/nuxt-chatra-module/-/nuxt-chatra-module-0.1.1.tgz#9d75c75c08a457828a23576b3635f91c0ab7d91e"
-  integrity sha512-uBfzvW7/NIAl7G7FU/cEk9i+Fjv+eVoLWq27npOYOguEqpKoftzZeGw6wPzhf87scUlRL9GGSyvabNuCXvB1jw==
+  version "0.1.2"
 
 nuxt@^2.14.1:
   version "2.14.1"

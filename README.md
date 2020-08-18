@@ -63,6 +63,13 @@ export default {
 All methods are in `this.$chatra` space, to check all supported methods,
 go to methods api [reference](https://chatra.com/help/api/#methods).
 
+If there is no method in current version of module, you can
+temporarily use universal method:
+
+```js
+this.$chatra.universal('methodName', methodPayload) // payload is optional
+```
+
 # TODO
 
 - Support all methods from api
@@ -83,6 +90,8 @@ You can make changes by:
 cd nuxt-chatra-module
 yarn
 # provide chatra id and start nuxt dev server
+# you can check your id here
+# https://app.chatra.io/settings/integrations/widget
 CHATRA_ID=abcdefghijklmnopq yarn dev
 # change something in packages/nuxt-chatra-module
 git commit .
