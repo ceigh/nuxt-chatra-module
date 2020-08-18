@@ -15,17 +15,16 @@ s.async = true
 s.src = 'https://call.chatra.io/chatra.js'
 if (d.head) d.head.appendChild(s)
 
-const Chatra = w.Chatra
 // https://chatra.com/help/api/#methods
 Vue.prototype.$chatra = {
   /* for things that may be missing
    * in the current version of the module
    */
   universal (methodName, methodPayload) {
-    Chatra(methodName, methodPayload)
+    w.Chatra(methodName, methodPayload)
   },
 
   openChat () {
-    Chatra('openChat', true)
+    w.Chatra('openChat', true)
   }
 }
