@@ -63,14 +63,6 @@ export default {
 All methods are in `this.$chatra` space, to check all supported methods,
 go to methods api [reference](https://chatra.com/help/api/#methods).
 
-# TODO
-
-- Support all methods from api
-- Unit testing
-- Yarn PnP
-- Full documentation
-
-
 # Development
 
 This package use [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces).
