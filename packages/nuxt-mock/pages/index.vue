@@ -1,20 +1,31 @@
 <template>
   <div>
-    <h1>Nuxt Chatra module test site</h1>
-    <button v-for='m in chatra'
-      :key='m.name'
-      @click='m'>{{ m.name }}</button>
+    <h1>Nuxt Chatra module</h1>
+    <button @click='load'>Load</button>
+
+    <div v-if='chatra'>
+      <button v-for='(m, i) in chatra'
+        :key='i'
+        @click='m'>{{ m.name }}</button>
+    </div>
   </div>
 </template>
 
 <script>
   export default {
-    computed: {
-      chatra () {
-        const { $chatra } = this
-        return {
-          ...$chatra,
-          // pass modified methods with payload
+    data() {
+      return {
+        chatra: null
+      }
+    },
+
+    methods: {
+      load() {
+        const c = this.$chatra
+        this.chatra = {
+          ...c,
+          // override to pass arguments
+          setButtonPosition: () => c.setButtonPosition('bl')
         }
       }
     }

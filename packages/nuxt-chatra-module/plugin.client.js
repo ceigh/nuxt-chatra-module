@@ -1,30 +1,40 @@
 import Vue from 'vue'
 
 const options = JSON.parse('<%= JSON.stringify(options) %>')
-if (options.debug) console.log('Chatra options: ', options)
+const { debug } = options
 
-// https://app.chatra.io/settings/integrations/widget
-const [d, w, c] = [document, window, 'Chatra']
-w.ChatraID = options.id
-w.ChatraSetup = options.setup
-var s = d.createElement('script')
-w[c] = w[c] || function () {
-  (w[c].q = w[c].q || []).push(arguments)
+const getMethodObj = () => {
+  const excluded = ['showChat', 'hideChat', 'closeChat', 'collapseChat', 'expandChat']
+
+  const names = Object.keys(window.Chatra)
+    .filter(name => !(name[0] === '_' || excluded.includes(name)))
+  if (debug) console.log('Chatra method names: ', names)
+
+  const entries = names.map(name => {
+    // to generate functions with names
+    // eslint-disable-next-line no-new-func
+    const func = new Function(`return function ${name}(...args) {
+      window.Chatra('${name}', ...args)
+    }`)()
+    return [name, func]
+  })
+  if (debug) console.log('Chatra method entries: ', entries)
+
+  const obj = Object.fromEntries(entries)
+  if (debug) console.log('Chatra method object: ', obj)
+
+  return obj
 }
-s.async = true
-s.src = 'https://call.chatra.io/chatra.js'
-if (d.head) d.head.appendChild(s)
 
-// https://chatra.com/help/api/#methods
-Vue.prototype.$chatra = {
-  /* for things that may be missing
-   * in the current version of the module
-   */
-  universal (methodName, methodPayload) {
-    w.Chatra(methodName, methodPayload)
-  },
+if (debug) console.log('Chatra options: ', options)
+window.ChatraID = options.id
+window.ChatraSetup = options.setup
 
-  openChat () {
-    w.Chatra('openChat', true)
-  }
-}
+const script = document.createElement('script')
+script.addEventListener('load', () => {
+  Vue.prototype.$chatra = getMethodObj()
+})
+script.async = true
+script.src = 'https://call.chatra.io/chatra.js'
+
+document.head.appendChild(script)

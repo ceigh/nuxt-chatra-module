@@ -63,13 +63,6 @@ export default {
 All methods are in `this.$chatra` space, to check all supported methods,
 go to methods api [reference](https://chatra.com/help/api/#methods).
 
-If there is no method in current version of module, you can
-temporarily use universal method:
-
-```js
-this.$chatra.universal('methodName', methodPayload) // payload is optional
-```
-
 # TODO
 
 - Support all methods from api
