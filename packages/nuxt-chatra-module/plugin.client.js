@@ -10,11 +10,15 @@ const fallbackMethods = [
   'sendAutoMessage', 'restart', 'kill'
 ]
 
+const options = JSON.parse('<%= JSON.stringify(options) %>')
+const { debug } = options
+if (debug) console.log('Chatra options: ', options)
+
 const generate = (names = Object.keys(window.Chatra), isFallback = false) => {
   const excluded = ['showChat', 'hideChat', 'closeChat', 'collapseChat', 'expandChat']
 
   const filtered = names.filter(name => !(name[0] === '_' || name in excluded))
-  console.log('Chatra method names: ', filtered)
+  if (debug) console.log('Chatra method names: ', filtered)
 
   const entries = filtered.map(name => {
     const args = isFallback ? '' : '...args'
@@ -23,16 +27,13 @@ const generate = (names = Object.keys(window.Chatra), isFallback = false) => {
     const func = new Function(`return function ${name}(${args}) { ${payload} }`)()
     return [name, func]
   })
-  console.log('Chatra method entries: ', entries)
+  if (debug) console.log('Chatra method entries: ', entries)
 
   const obj = Object.fromEntries(entries)
-  console.log('Chatra method object: ', obj)
+  if (debug) console.log('Chatra method object: ', obj)
 
   return obj
 }
-
-const options = JSON.parse('<%= JSON.stringify(options) %>')
-if (options.debug) console.log('Chatra options: ', options)
 
 Vue.prototype.$chatra = {
   ...options,
@@ -44,6 +45,7 @@ window.ChatraSetup = options.setup
 
 const script = document.createElement('script')
 script.addEventListener('load', () => {
+  if (debug) console.log('Chatra loaded')
   Vue.prototype.$chatra.methods = generate()
 })
 script.async = true
