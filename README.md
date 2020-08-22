@@ -1,4 +1,4 @@
-# 💬 nuxt-chatra-module [![npm](https://img.shields.io/npm/v/nuxt-chatra-module)](https://www.npmjs.com/package/nuxt-chatra-module) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/nuxt-chatra-module)](https://www.npmjs.com/package/nuxt-chatra-module)
+# 💬 nuxt-chatra-module [![npm](https://img.shields.io/npm/v/nuxt-chatra-module)](https://www.npmjs.com/package/nuxt-chatra-module)
 
 > Simple [Nuxt.js](https://nuxtjs.org) [Chatra](https://chatra.com) integration.
 
@@ -52,7 +52,7 @@ You can call chatra methods directly from Vue instances, `components/OpenChatBtn
 <script>
 export default {
   methods: {
-    openChat () {
+    openChat() {
       this.$chatra.methods.openChat()
     }
   }

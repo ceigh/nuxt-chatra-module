@@ -9,16 +9,38 @@ const fallbackMethods = [
   'hide', 'show', 'setGroupId',
   'sendAutoMessage', 'restart', 'kill'
 ]
+let isFallback = true
 
 const options = JSON.parse('<%= JSON.stringify(options) %>')
 const { debug } = options
-if (debug) console.log('Chatra options: ', options)
+
+const log = (title, value = '\n') => {
+  if (!debug) return
+  const fallback = isFallback ? 'fallback' : 'normal'
+
+  const r = '3px'
+  const pill = (color, pos) => `
+    background: ${color};
+    padding: 0 ${r};
+    font-weight: bold;
+    ${pos ? `border-top-${pos}-radius: ${r};` : ''}
+    ${pos ? `border-bottom-${pos}-radius: ${r};` : ''}
+  `
+
+  const css1 = pill('#493669', 'left')
+  const css2 = `${pill(isFallback ? '#fb4a46' : '#3ba553')}; color: #000`
+  const css3 = pill('#3c5d86', 'right')
+
+  console.log(`%cchatra%c${fallback}%c${title}`, css1, css2, css3, value)
+}
+
+log('options', options)
 
 const generate = (names = Object.keys(window.Chatra), isFallback = false) => {
   const excluded = ['showChat', 'hideChat', 'closeChat', 'collapseChat', 'expandChat']
 
   const filtered = names.filter(name => !(name[0] === '_' || name in excluded))
-  if (debug) console.log('Chatra method names: ', filtered)
+  log('names', filtered)
 
   const entries = filtered.map(name => {
     const args = isFallback ? '' : '...args'
@@ -27,14 +49,15 @@ const generate = (names = Object.keys(window.Chatra), isFallback = false) => {
     const func = new Function(`return function ${name}(${args}) { ${payload} }`)()
     return [name, func]
   })
-  if (debug) console.log('Chatra method entries: ', entries)
+  log('entries', entries)
 
   const obj = Object.fromEntries(entries)
-  if (debug) console.log('Chatra method object: ', obj)
+  log('object', obj)
 
   return obj
 }
 
+log('loaded')
 Vue.prototype.$chatra = {
   ...options,
   methods: generate(fallbackMethods, true)
@@ -45,7 +68,8 @@ window.ChatraSetup = options.setup
 
 const script = document.createElement('script')
 script.addEventListener('load', () => {
-  if (debug) console.log('Chatra loaded')
+  isFallback = false
+  log('loaded')
   Vue.prototype.$chatra.methods = generate()
 })
 script.async = true
