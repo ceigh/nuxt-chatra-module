@@ -1,40 +1,51 @@
 import Vue from 'vue'
 
-const options = JSON.parse('<%= JSON.stringify(options) %>')
-const { debug } = options
+const fallbackMethods = [
+  'setIntegrationData', 'updateIntegrationData', 'pageView',
+  'setChatWidth', 'setButtonSize', 'setChatHeight',
+  'setZIndex', 'setButtonPosition', 'resetButtonPosition',
+  'setColors', 'resetColors', 'setLocale',
+  'openChat', 'expandWidget', 'minimizeWidget',
+  'hide', 'show', 'setGroupId',
+  'sendAutoMessage', 'restart', 'kill'
+]
 
-const getMethodObj = () => {
+const generate = (names = Object.keys(window.Chatra), isFallback = false) => {
   const excluded = ['showChat', 'hideChat', 'closeChat', 'collapseChat', 'expandChat']
 
-  const names = Object.keys(window.Chatra)
-    .filter(name => !(name[0] === '_' || excluded.includes(name)))
-  if (debug) console.log('Chatra method names: ', names)
+  const filtered = names.filter(name => !(name[0] === '_' || name in excluded))
+  console.log('Chatra method names: ', filtered)
 
-  const entries = names.map(name => {
-    // to generate functions with names
+  const entries = filtered.map(name => {
+    const args = isFallback ? '' : '...args'
+    const payload = isFallback ? '' : `window.Chatra('${name}', ...args)`
     // eslint-disable-next-line no-new-func
-    const func = new Function(`return function ${name}(...args) {
-      window.Chatra('${name}', ...args)
-    }`)()
+    const func = new Function(`return function ${name}(${args}) { ${payload} }`)()
     return [name, func]
   })
-  if (debug) console.log('Chatra method entries: ', entries)
+  console.log('Chatra method entries: ', entries)
 
   const obj = Object.fromEntries(entries)
-  if (debug) console.log('Chatra method object: ', obj)
+  console.log('Chatra method object: ', obj)
 
   return obj
 }
 
-if (debug) console.log('Chatra options: ', options)
+const options = JSON.parse('<%= JSON.stringify(options) %>')
+if (options.debug) console.log('Chatra options: ', options)
+
+Vue.prototype.$chatra = {
+  ...options,
+  methods: generate(fallbackMethods, true)
+}
+
 window.ChatraID = options.id
 window.ChatraSetup = options.setup
 
 const script = document.createElement('script')
 script.addEventListener('load', () => {
-  Vue.prototype.$chatra = getMethodObj()
+  Vue.prototype.$chatra.methods = generate()
 })
 script.async = true
 script.src = 'https://call.chatra.io/chatra.js'
-
 document.head.appendChild(script)

@@ -7,6 +7,6 @@
   },
   "dependencies": {
     "nuxt": "^2.14.1",
-    "nuxt-chatra-module": "latest"
+    "nuxt-chatra-module": "^2.0.0"
   }
 }

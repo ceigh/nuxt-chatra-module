@@ -1,33 +1,22 @@
 <template>
   <div>
     <h1>Nuxt Chatra module</h1>
-    <button @click='load'>Load</button>
-
-    <div v-if='chatra'>
-      <button v-for='(m, i) in chatra'
-        :key='i'
-        @click='m'>{{ m.name }}</button>
-    </div>
+    <button @click='openChat'>Open chat</button>
   </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        chatra: null
-      }
-    },
+export default {
+  computed: {
+    chatra() {
+      return this.$chatra
+    }
+  },
 
-    methods: {
-      load() {
-        const c = this.$chatra
-        this.chatra = {
-          ...c,
-          // override to pass arguments
-          setButtonPosition: () => c.setButtonPosition('bl')
-        }
-      }
+  methods: {
+    openChat() {
+      this.$chatra.methods.openChat()
     }
   }
+}
 </script>

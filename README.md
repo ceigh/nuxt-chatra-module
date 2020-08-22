@@ -53,7 +53,7 @@ You can call chatra methods directly from Vue instances, `components/OpenChatBtn
 export default {
   methods: {
     openChat () {
-      this.$chatra.openChat()
+      this.$chatra.methods.openChat()
     }
   }
 }
