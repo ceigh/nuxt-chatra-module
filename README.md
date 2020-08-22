@@ -60,7 +60,7 @@ export default {
 </script>
 ```
 
-All methods are in `this.$chatra` space, to check all supported methods,
+All methods are in `this.$chatra.methods` space, to check all supported methods,
 go to methods api [reference](https://chatra.com/help/api/#methods).
 
 # Development
