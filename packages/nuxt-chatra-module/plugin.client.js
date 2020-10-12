@@ -43,10 +43,16 @@ const generate = (names = Object.keys(window.Chatra), isFallback = false) => {
   log('names', filtered)
 
   const entries = filtered.map(name => {
-    const args = isFallback ? '' : '...args'
-    const payload = isFallback ? '' : `window.Chatra('${name}', ...args)`
+    /* to pass all arguments to Chatra function
+     * transpiled to support old browsers, minified
+     */
+    const args = 'for(var l=arguments.length,a=new Array(l),k=0;k<l;k++){a[k]=arguments[k]}'
+    const payload = isFallback ? ''
+      : `${args}var w;(w=window).Chatra.apply(w,['${name}'].concat(a))`
+
     // eslint-disable-next-line no-new-func
-    const func = new Function(`return function ${name}(${args}) { ${payload} }`)()
+    const func = new Function(`return function ${name}(){${payload}}`)()
+    // log(`function - ${name}`, func.toString())
     return [name, func]
   })
   log('entries', entries)

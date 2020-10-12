@@ -1,5 +1,8 @@
 module.exports = {
-  extends: 'standard',
+  extends: [
+    'standard',
+    'plugin:vue/vue3-recommended'
+  ],
   ignorePatterns: [
     '!.commitlintrc.js',
     '!.huskyrc.js',

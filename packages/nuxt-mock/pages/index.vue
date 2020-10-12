@@ -1,21 +1,49 @@
 <template>
   <div>
     <h1>Nuxt Chatra module</h1>
-    <button @click='openChat'>Open chat</button>
+    <ul>
+      <li>
+        Simple method
+        <button @click="openChat">
+          Open chat
+        </button>
+      </li>
+      <li>
+        Method with payload
+        <button @click="setChatWidth">
+          Set chat width
+        </button>
+        <input
+          v-model.number="chatWidth"
+          type="range"
+          min="100"
+          max="1000"
+        >
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      chatWidth: 500
+    }
+  },
+
   computed: {
-    chatra() {
+    chatra () {
       return this.$chatra
     }
   },
 
   methods: {
-    openChat() {
+    openChat () {
       this.$chatra.methods.openChat()
+    },
+    setChatWidth () {
+      this.$chatra.methods.setChatWidth(this.chatWidth)
     }
   }
 }
