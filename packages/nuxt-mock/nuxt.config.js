@@ -5,7 +5,5 @@ export default {
     id: process.env.CHATRA_ID,
     debug: true
   },
-  modules: [
-    'nuxt-chatra-module'
-  ]
+  modules: ['nuxt-chatra-module']
 }
