@@ -33,7 +33,7 @@ export default {
   chatra: {
     id: 'abcdefghijklmnopq',
     setup: {
-      // ...
+      // …
     }
   }
 }
@@ -52,7 +52,7 @@ You can call chatra methods directly from Vue instances, `components/OpenChatBtn
 <script>
 export default {
   methods: {
-    openChat() {
+    openChat () {
       this.$chatra.methods.openChat()
     }
   }
@@ -78,6 +78,7 @@ yarn
 # you can check your id here
 # https://app.chatra.io/settings/integrations/widget
 CHATRA_ID=abcdefghijklmnopq yarn dev
+# or add CHATRA_ID to packages/nuxt-mock/.env (see .env.example)
 # change something in packages/nuxt-chatra-module
 git commit .
 ```
