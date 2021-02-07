@@ -5979,6 +5979,11 @@ num2fraction@^1.2.2:
   resolved "https://registry.yarnpkg.com/num2fraction/-/num2fraction-1.2.2.tgz#6f682b6a027a4e9ddfa4564cd2589d1d4e669ede"
   integrity sha1-b2gragJ6Tp3fpFZM0lidHU5mnt4=
 
+nuxt-chatra-module@^2.1.0:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/nuxt-chatra-module/-/nuxt-chatra-module-2.1.1.tgz#d91aa002386dd6a032eed691e2ed6610508410c3"
+  integrity sha512-6r/Yh+QcBpZEg+MiutLUrduZ6ynwzVMNB6nwqdPJkmnMAlvVzvhuchvm4NG5Han2217loYieCWuYP+QkxPOwfA==
+
 nuxt@^2.14.1:
   version "2.14.6"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-2.14.6.tgz#56ba99cbd055ebdb33250a4d1ed09f084ad7fa14"
