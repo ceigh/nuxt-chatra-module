@@ -1,85 +1,55 @@
 import Vue from 'vue'
 
-const fallbackMethods = [
-  'setIntegrationData', 'updateIntegrationData', 'pageView',
-  'setChatWidth', 'setButtonSize', 'setChatHeight',
-  'setZIndex', 'setButtonPosition', 'resetButtonPosition',
-  'setColors', 'resetColors', 'setLocale',
-  'openChat', 'expandWidget', 'minimizeWidget',
-  'hide', 'show', 'setGroupId',
-  'sendAutoMessage', 'restart', 'kill'
-]
-let isFallback = true
+const { vueInjectOnly, pluginOptions } =
+  JSON.parse('<%= JSON.stringify(options) %>')
 
-const options = JSON.parse('<%= JSON.stringify(options) %>')
-const { debug, vueInjectOnly } = options
-
-function log (title, value = '\n') {
-  if (!debug) return
-  const fallback = isFallback ? 'fallback' : 'normal'
-
-  const r = '3px'
-  const pill = (color, pos) => `
-    background: ${color};
-    padding: 0 ${r};
-    font-weight: bold;
-    ${pos ? `border-top-${pos}-radius: ${r};` : ''}
-    ${pos ? `border-bottom-${pos}-radius: ${r};` : ''}
-  `
-
-  const css1 = pill('#493669', 'left')
-  const css2 = `${pill(isFallback ? '#fb4a46' : '#3ba553')}; color: #000`
-  const css3 = pill('#3c5d86', 'right')
-
-  console.log(`%cchatra%c${fallback}%c${title}`, css1, css2, css3, value)
+function dbgMsg (msg) {
+  if (pluginOptions.debug) console.debug('nuxt-chatra-module:', msg)
 }
 
-function generateMethods (names, isFallback = false) {
-  const excluded = ['showChat', 'hideChat', 'closeChat', 'collapseChat', 'expandChat']
+function getMethods () {
+  const names = Object.keys(window.Chatra)
+  dbgMsg({ names })
 
-  const filtered = names.filter(name => !(name[0] === '_' || name in excluded))
-  log('names', filtered)
-
-  const entries = filtered.map(name => {
+  const entries = names.map(name => {
     /* to pass all arguments to Chatra function
      * transpiled to support old browsers, minified
      */
     const args = 'for(var l=arguments.length,a=new Array(l),k=0;k<l;k++){a[k]=arguments[k]}'
-    const payload = isFallback ? ''
-      : `${args}var w;(w=window).Chatra.apply(w,['${name}'].concat(a))`
+    const payload = `${args}var w;(w=window).Chatra.apply(w,['${name}'].concat(a))`
 
     // eslint-disable-next-line no-new-func
     const func = new Function(`return function ${name}(){${payload}}`)()
     // log(`function - ${name}`, func.toString())
     return [name, func]
   })
-  log('entries', entries)
+  dbgMsg({ entries })
 
   const obj = Object.fromEntries(entries)
-  log('object', obj)
+  dbgMsg({ obj })
 
   return obj
 }
 
-function generate (names = Object.keys(window.Chatra), isFallback = false) {
+function getPlugin () {
   return {
-    ...options,
-    methods: generateMethods(names, isFallback)
+    ...pluginOptions,
+    methods: getMethods()
   }
 }
 
-function doInject (nuxtInject, chatra) {
+function doInject (nuxtInject, plugin) {
   if (vueInjectOnly) {
-    Vue.prototype.$chatra = chatra
+    Vue.prototype.$chatra = plugin
   } else {
-    nuxtInject('chatra', chatra) // TODO: fix not injected second time
+    nuxtInject('chatra', plugin)
   }
-  log('injected')
+  dbgMsg('injected')
 }
 
 function loadScript (cb) {
-  window.ChatraID = options.id
-  window.ChatraSetup = options.setup
+  window.ChatraID = pluginOptions.id
+  window.ChatraSetup = pluginOptions.setup
   const script = document.createElement('script')
   script.addEventListener('load', cb)
   script.async = true
@@ -87,19 +57,12 @@ function loadScript (cb) {
   document.head.appendChild(script)
 }
 
-log('vueInjectOnly', vueInjectOnly)
-delete options.vueInjectOnly
-log('options', options)
-log('loaded')
+dbgMsg({ vueInjectOnly })
+dbgMsg({ pluginOptions })
 
 export default function (_, inject) {
-  // fallback before loading
-  doInject(inject, generate(fallbackMethods, true))
-
   loadScript(() => {
-    // normal
-    isFallback = false
-    log('loaded')
-    doInject(inject, generate())
+    dbgMsg('loaded')
+    doInject(inject, getPlugin())
   })
 }

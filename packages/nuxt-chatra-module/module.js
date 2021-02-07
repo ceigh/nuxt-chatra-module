@@ -6,7 +6,7 @@ export default function () {
     src: path.resolve(__dirname, 'plugin.client.js'),
     options: {
       vueInjectOnly: ssr || target !== 'static',
-      ...chatra
+      pluginOptions: chatra
     }
   })
 }

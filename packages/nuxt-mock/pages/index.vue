@@ -32,17 +32,7 @@ export default {
     }
   },
 
-  created () {
-    this.logChatraObj('created')
-  },
-  mounted () {
-    this.logChatraObj('mounted')
-  },
-
   methods: {
-    logChatraObj (from) {
-      console.log(`chatra object from ${from}`, this.$chatra)
-    },
     openChat () {
       this.$chatra.methods.openChat()
     },
