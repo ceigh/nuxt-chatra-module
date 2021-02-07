@@ -12,9 +12,9 @@ const fallbackMethods = [
 let isFallback = true
 
 const options = JSON.parse('<%= JSON.stringify(options) %>')
-const { debug } = options
+const { debug, vueInjectOnly } = options
 
-const log = (title, value = '\n') => {
+function log (title, value = '\n') {
   if (!debug) return
   const fallback = isFallback ? 'fallback' : 'normal'
 
@@ -34,9 +34,7 @@ const log = (title, value = '\n') => {
   console.log(`%cchatra%c${fallback}%c${title}`, css1, css2, css3, value)
 }
 
-log('options', options)
-
-const generate = (names = Object.keys(window.Chatra), isFallback = false) => {
+function generateMethods (names, isFallback = false) {
   const excluded = ['showChat', 'hideChat', 'closeChat', 'collapseChat', 'expandChat']
 
   const filtered = names.filter(name => !(name[0] === '_' || name in excluded))
@@ -63,21 +61,45 @@ const generate = (names = Object.keys(window.Chatra), isFallback = false) => {
   return obj
 }
 
-log('loaded')
-Vue.prototype.$chatra = {
-  ...options,
-  methods: generate(fallbackMethods, true)
+function generate (names = Object.keys(window.Chatra), isFallback = false) {
+  return {
+    ...options,
+    methods: generateMethods(names, isFallback)
+  }
 }
 
-window.ChatraID = options.id
-window.ChatraSetup = options.setup
+function doInject (nuxtInject, chatra) {
+  if (vueInjectOnly) {
+    Vue.prototype.$chatra = chatra
+  } else {
+    nuxtInject('chatra', chatra) // TODO: fix not injected second time
+  }
+  log('injected')
+}
 
-const script = document.createElement('script')
-script.addEventListener('load', () => {
-  isFallback = false
-  log('loaded')
-  Vue.prototype.$chatra.methods = generate()
-})
-script.async = true
-script.src = 'https://call.chatra.io/chatra.js'
-document.head.appendChild(script)
+function loadScript (cb) {
+  window.ChatraID = options.id
+  window.ChatraSetup = options.setup
+  const script = document.createElement('script')
+  script.addEventListener('load', cb)
+  script.async = true
+  script.src = 'https://call.chatra.io/chatra.js'
+  document.head.appendChild(script)
+}
+
+log('vueInjectOnly', vueInjectOnly)
+delete options.vueInjectOnly
+log('options', options)
+log('loaded')
+
+export default function (_, inject) {
+  // fallback before loading
+  doInject(inject, generate(fallbackMethods, true))
+
+  loadScript(() => {
+    // normal
+    isFallback = false
+    log('loaded')
+    doInject(inject, generate())
+  })
+}
