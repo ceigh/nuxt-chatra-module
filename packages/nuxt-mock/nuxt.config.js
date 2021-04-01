@@ -8,8 +8,11 @@ export default {
         buttonText: '#f600a5',
         buttonBg: '#fff'
       }
-    },
-    debug: true
+    }
   },
-  modules: ['nuxt-chatra-module']
+  modules: ['nuxt-chatra-module'],
+  plugins: ['~/plugins/example.client'],
+  build: {
+    transpile: [({ isLegacy }) => isLegacy && 'nuxt-chatra-module']
+  }
 }

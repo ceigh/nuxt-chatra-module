@@ -4,13 +4,16 @@
 
 # Installation
 
-`yarn add nuxt-chatra-module # npm i nuxt-chatra-module`
+`yarn add nuxt-chatra-module`
 
 Add `chatra` section with options to your nuxt config,
 only `id` is required.
 Check your id [here](https://app.chatra.io/settings/integrations/widget).
 
-Also you must add `nuxt-chatra-module` to `modules` section:
+Then add `nuxt-chatra-module` to `modules` section.
+
+You may also need to transpile this module if
+you need support for older browsers.
 
 ```js
 export default {
@@ -19,7 +22,10 @@ export default {
   },
   modules: [
     'nuxt-chatra-module'
-  ]
+  ],
+  build: {
+    transpile: [({ isLegacy }) => isLegacy && 'nuxt-chatra-module']
+  }
 }
 ```
 

@@ -8,5 +8,8 @@ export default function (_, inject) {
   script.src = 'https://call.chatra.io/chatra.js'
   document.head.appendChild(script)
 
-  inject('chatra', (...args) => window.Chatra(...args))
+  inject('chatra', (...args) => {
+    const { Chatra } = window
+    if (Chatra) Chatra(...args)
+  })
 }
