@@ -6,9 +6,9 @@
 
 `yarn add nuxt-chatra-module # npm i nuxt-chatra-module`
 
-Add `chatra` section with options to your `nuxt.config.js`,
-
-check all options below, only `id` option is required.
+Add `chatra` section with options to your nuxt config,
+only `id` is required.
+Check your id [here](https://app.chatra.io/settings/integrations/widget).
 
 Also you must add `nuxt-chatra-module` to `modules` section:
 
@@ -41,9 +41,11 @@ export default {
 
 To check, what setup options is available go to [api reference](https://chatra.com/help/api/#settings).
 
-# Methods
+# Usage
 
-You can call chatra methods directly from Vue instances, `components/OpenChatBtn.vue`:
+This module simply injected `window.Chatra` function into nuxt.
+
+You can call chatra methods directly from Vue instances:
 ```html
 <template>
   <button @click='openChat'>Open chat</button>
@@ -53,36 +55,26 @@ You can call chatra methods directly from Vue instances, `components/OpenChatBtn
 export default {
   methods: {
     openChat () {
-      this.$chatra.methods.openChat()
+      this.$chatra('openChat')
     }
   }
 }
 </script>
 ```
 
-All methods are in `this.$chatra.methods` space, to check all supported methods,
-go to methods api [reference](https://chatra.com/help/api/#methods).
+You can find other methods [here](https://chatra.com/help/api/#methods).
 
 # Development
 
 This package use [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces).
 It's just to separate nuxt testing dev space and our module.
 
-You can make changes by:
-
 ```shell
-# git clone
-cd nuxt-chatra-module
-yarn
+git clone git@github.com:ceigh/nuxt-chatra-module.git
+cd nuxt-chatra-module && yarn
 # provide chatra id and start nuxt dev server
 # you can check your id here
 # https://app.chatra.io/settings/integrations/widget
 CHATRA_ID=abcdefghijklmnopq yarn dev
 # or add CHATRA_ID to packages/nuxt-mock/.env (see .env.example)
-# change something in packages/nuxt-chatra-module
-git commit .
 ```
-
-# License
-
-MIT.

@@ -1,12 +1,14 @@
 require('dotenv').config()
 
 export default {
-  /*
-  target: 'static',
-  ssr: false,
-  */
   chatra: {
     id: process.env.CHATRA_ID,
+    setup: {
+      colors: {
+        buttonText: '#f600a5',
+        buttonBg: '#fff'
+      }
+    },
     debug: true
   },
   modules: ['nuxt-chatra-module']
