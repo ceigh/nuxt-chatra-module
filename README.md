@@ -1,4 +1,4 @@
-# 💬 nuxt-chatra-module [![npm](https://img.shields.io/npm/v/nuxt-chatra-module)](https://www.npmjs.com/package/nuxt-chatra-module)
+# 💬 nuxt-chatra-module
 
 > Simple [Nuxt.js](https://nuxtjs.org) [Chatra](https://chatra.com) integration.
 
